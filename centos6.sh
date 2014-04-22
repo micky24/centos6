@@ -227,6 +227,8 @@ chmod +x speedtest_cli.py
 chmod +x ps_mem.py
 chmod +x userlogin.sh
 chmod +x userexpired.sh
+echo "*/10 * * * * root /root/userexpired.sh" >> /etc/cron.d/userexpired
+echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
 
 
 # cron
@@ -258,6 +260,8 @@ service squid restart
 service webmin restart
 service crond restart
 chkconfig crond on
+rm -rf ~/.bash_history && history -c
+echo "unset HISTFILE" >> /etc/profile
 
 # info
 clear
@@ -269,7 +273,7 @@ echo "-------"  | tee -a log-install.txt
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"  | tee -a log-install.txt
 echo "OpenSSH  : 22, 80"  | tee -a log-install.txt
 echo "Dropbear : 443"  | tee -a log-install.txt
-echo "Squid3   : 8080 (limit to IP SSH)"  | tee -a log-install.txt
+echo "Squid   : 8080 (limit to IP SSH)"  | tee -a log-install.txt
 echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
 echo "nginx    : 81"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
@@ -288,6 +292,8 @@ echo "screenfetch"  | tee -a log-install.txt
 echo "./ps_mem.py"  | tee -a log-install.txt
 echo "./speedtest_cli.py --share"  | tee -a log-install.txt
 echo "./bench-network.sh"  | tee -a log-install.txt
+echo "./userlogin.sh"  | tee -a log-install.txt
+echo "./userexpired.sh >> auto running tiap 10jam"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Fitur lain"  | tee -a log-install.txt
 echo "----------"  | tee -a log-install.txt
@@ -297,6 +303,7 @@ echo "MRTG     : http://$MYIP:81/mrtg/"  | tee -a log-install.txt
 echo "Timezone : Asia/Jakarta"  | tee -a log-install.txt
 echo "Fail2Ban : [on]"  | tee -a log-install.txt
 echo "IPv6     : [off]"  | tee -a log-install.txt
+echo "Autolimit 2 bitvise per IP to all port (port 22, 80, 443, 1194, 7300 TCP/UDP)"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Script Modified by Yurissh OpenSource"  | tee -a log-install.txt
 echo "Thanks to Original Creator Kang Arie & Mikodemos" | tee -a log-install.txt
