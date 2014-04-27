@@ -242,8 +242,7 @@ iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 2 -j R
 iptables -A INPUT -p tcp --syn --dport 1194 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 7300 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p udp --syn --dport 7300 -m connlimit --connlimit-above 2 -j REJECT
-service iptables save
-service iptables restart
+iptables-save > /etc/iptables.up.rules
 chkconfig iptables on
 
 # finishing
