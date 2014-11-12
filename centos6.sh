@@ -221,6 +221,8 @@ wget -O bench-network.sh "https://raw.github.com/micky24/centos6/master/bench-ne
 wget -O ps_mem.py "https://raw.github.com/pixelb/ps_mem/master/ps_mem.py"
 wget -O userlogin.sh "https://raw.github.com/micky24/centos6/master/userlogin.sh"
 wget -O userexpired.sh "https://raw.github.com/micky24/centos6/master/userexpired.sh"
+wget -O sof "https://raw.github.com/micky24/centos6/master/sof"
+chmod +x sof
 chmod +x bench-network.sh
 chmod +x speedtest_cli.py
 chmod +x ps_mem.py
@@ -309,3 +311,4 @@ echo ""  | tee -a log-install.txt
 echo "SILAHKAN REBOOT VPS ANDA !"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "==============================================="  | tee -a log-install.txtecho "==============================================="  | tee -a log-install.txt
+./sof
