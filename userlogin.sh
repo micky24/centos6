@@ -38,4 +38,4 @@ do
 done
 
 echo "-----------------------------------------------"
-echo "Script Modified by Yurissh OpenSource";
+echo "Script Developed by Micky Maximus";
