@@ -23,7 +23,7 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service sshd restart
 
 # setting repo
-wget http://dl.fedoraproject.org/pub/epel/6/i386/dropbear-2014.65-1.el6.i686.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 rpm -Uvh epel-release-6-8.noarch.rpm
 rpm -Uvh remi-release-6.rpm
@@ -165,6 +165,8 @@ service sshd restart
 chkconfig sshd on
 
 # install dropbear
+wget http://dl.fedoraproject.org/pub/epel/6/i386/dropbear-2014.65-1.el6.i686.rpm
+rpm -Uvh dropbear-2014.65-1.el6.i686.rpm
 yum -y install dropbear
 echo "OPTIONS=\"-p 443\"" > /etc/sysconfig/dropbear
 echo "/bin/false" >> /etc/shells
