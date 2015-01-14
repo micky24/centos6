@@ -23,7 +23,7 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service sshd restart
 
 # setting repo
-wget http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/i386/dropbear-2014.65-1.el6.i686.rpm
 wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 rpm -Uvh epel-release-6-8.noarch.rpm
 rpm -Uvh remi-release-6.rpm
@@ -140,24 +140,23 @@ chmod +x /usr/bin/badvpn-udpgw
 screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 # install mrtg
-cd /etc/snmp/
-wget -O /etc/snmp/snmpd.conf "https://raw.github.com/micky24/centos6/master/snmpd.conf"
-wget -O /root/mrtg-mem.sh "https://raw.github.com/micky24/centos6/master/mrtg-mem.sh"
-chmod +x /root/mrtg-mem.sh
-service snmpd restart
-chkconfig snmpd on
-snmpwalk -v 1 -c public localhost | tail
-mkdir -p /home/vps/public_html/mrtg
-cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg/mrtg.cfg public@localhost
-curl  "https://raw.github.com/micky24/centos6/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
-sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg/mrtg.cfg
-sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg/mrtg.cfg
-indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg/mrtg.cfg
-echo "0-59/5 * * * * root env LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg" > /etc/cron.d/mrtg
-LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
-LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
-LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
-cd
+#wget -O /etc/snmp/snmpd.conf "https://raw.github.com/micky24/centos6/master/snmpd.conf"
+#wget -O /root/mrtg-mem.sh "https://raw.github.com/micky24/centos6/master/mrtg-mem.sh"
+#chmod +x /root/mrtg-mem.sh
+#service snmpd restart
+#chkconfig snmpd on
+#snmpwalk -v 1 -c public localhost | tail
+#mkdir -p /home/vps/public_html/mrtg
+#cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg/mrtg.cfg public@localhost
+#curl  "https://raw.github.com/micky24/centos6/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
+#sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg/mrtg.cfg
+#sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg/mrtg.cfg
+#indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg/mrtg.cfg
+#echo "0-59/5 * * * * root env LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg" > /etc/cron.d/mrtg
+#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+#cd
 
 # setting port ssh
 sed -i '/Port 22/a Port 80' /etc/ssh/sshd_config
@@ -174,17 +173,17 @@ service dropbear restart
 chkconfig dropbear on
 
 # install vnstat gui
-cd /home/vps/public_html/
-wget http://www.sqweek.com/sqweek/files/vnstat_php_frontend-1.5.1.tar.gz
-tar xf vnstat_php_frontend-1.5.1.tar.gz
-rm vnstat_php_frontend-1.5.1.tar.gz
-mv vnstat_php_frontend-1.5.1 vnstat
-cd vnstat
-sed -i 's/eth0/venet0/g' config.php
-sed -i "s/\$iface_list = array('venet0', 'sixxs');/\$iface_list = array('venet0');/g" config.php
-sed -i "s/\$language = 'nl';/\$language = 'en';/g" config.php
-sed -i 's/Internal/Internet/g' config.php
-sed -i '/SixXS IPv6/d' config.php
+#cd /home/vps/public_html/
+#wget http://www.sqweek.com/sqweek/files/vnstat_php_frontend-1.5.1.tar.gz
+#tar xf vnstat_php_frontend-1.5.1.tar.gz
+#rm vnstat_php_frontend-1.5.1.tar.gz
+#mv vnstat_php_frontend-1.5.1 vnstat
+#cd vnstat
+#sed -i 's/eth0/venet0/g' config.php
+#sed -i "s/\$iface_list = array('venet0', 'sixxs');/\$iface_list = array('venet0');/g" config.php
+#sed -i "s/\$language = 'nl';/\$language = 'en';/g" config.php
+#sed -i 's/Internal/Internet/g' config.php
+#sed -i '/SixXS IPv6/d' config.php
 cd
 
 # install fail2ban
@@ -201,8 +200,8 @@ chkconfig squid on
 
 # install webmin
 cd
-wget http://download.webmin.com/download/yum/webmin-1.680-1.noarch.rpm
-rpm -Uvh webmin-1.680-1.noarch.rpm
+wget http://prdownloads.sourceforge.net/webadmin/webmin-1.730-1.noarch.rpm
+rpm -U webmin-1.730-1.noarch.rpm
 service webmin restart
 chkconfig webmin on
 
@@ -229,7 +228,7 @@ chmod +x ps_mem.py
 chmod +x userlogin.sh
 chmod +x userexpired.sh
 echo "*/10 * * * * root /root/userexpired.sh" >> /etc/cron.d/userexpired
-echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
+#echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
 
 
 # cron
@@ -237,7 +236,7 @@ service crond start
 chkconfig crond on
 
 # limit user 2 bitvise per port
-iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 2 -j REJECT
+#iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 1194 -m connlimit --connlimit-above 2 -j REJECT
@@ -263,52 +262,4 @@ chkconfig crond on
 rm -rf ~/.bash_history && history -c
 echo "unset HISTFILE" >> /etc/profile
 
-# info
-clear
-echo "Autoscript Include:" | tee log-install.txt
-echo "==========================================" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Service"  | tee -a log-install.txt
-echo "-------"  | tee -a log-install.txt
-echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"  | tee -a log-install.txt
-echo "OpenSSH  : 22, 80"  | tee -a log-install.txt
-echo "Dropbear : 443"  | tee -a log-install.txt
-echo "Squid   : 8080 (limit to IP SSH)"  | tee -a log-install.txt
-echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
-echo "nginx    : 81"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Tools"  | tee -a log-install.txt
-echo "-----"  | tee -a log-install.txt
-echo "axel"  | tee -a log-install.txt
-echo "bmon"  | tee -a log-install.txt
-echo "htop"  | tee -a log-install.txt
-echo "iftop"  | tee -a log-install.txt
-echo "mtr"  | tee -a log-install.txt
-echo "nethogs"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Script"  | tee -a log-install.txt
-echo "------"  | tee -a log-install.txt
-echo "screenfetch"  | tee -a log-install.txt
-echo "./ps_mem.py"  | tee -a log-install.txt
-echo "./speedtest_cli.py --share"  | tee -a log-install.txt
-echo "./bench-network.sh"  | tee -a log-install.txt
-echo "./userlogin.sh"  | tee -a log-install.txt
-echo "./userexpired.sh >> auto running tiap 10jam"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Fitur lain"  | tee -a log-install.txt
-echo "----------"  | tee -a log-install.txt
-echo "Webmin   : http://$MYIP:10000/"  | tee -a log-install.txt
-echo "vnstat   : http://$MYIP:81/vnstat/"  | tee -a log-install.txt
-echo "MRTG     : http://$MYIP:81/mrtg/"  | tee -a log-install.txt
-echo "Timezone : Asia/Jakarta"  | tee -a log-install.txt
-echo "Fail2Ban : [on]"  | tee -a log-install.txt
-echo "IPv6     : [off]"  | tee -a log-install.txt
-echo "Autolimit 2 bitvise per IP to all port (port 22, 80, 443, 1194, 7300 TCP/UDP)"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Script Modified by Yurissh OpenSource"  | tee -a log-install.txt
-echo "Thanks to Original Creator Kang Arie & Mikodemos" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "SILAHKAN REBOOT VPS ANDA !"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "==============================================="  | tee -a log-install.txtecho "==============================================="  | tee -a log-install.txt
-./sof
+rm -rf centos*
