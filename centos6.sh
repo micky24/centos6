@@ -49,6 +49,17 @@ yum -y remove samba
 # update
 yum -y update
 
+# insert SWAP file
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=1024k
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sed -i '$ i\/swapfile          swap            swap    defaults        0 0' /etc/fstab
+chown root:root /swapfile 
+chmod 0600 /swapfile
+sysctl vm.swappiness=10
+sed -i '$ i\/vm.swappiness=10' /etc/sysctl.conf
+sleep 6
+
 # install webserver
 yum -y install nginx php-fpm php-cli
 service nginx restart
@@ -165,8 +176,8 @@ service sshd restart
 chkconfig sshd on
 
 # install dropbear
-wget http://dl.fedoraproject.org/pub/epel/6/i386/dropbear-2014.65-1.el6.i686.rpm
-rpm -Uvh dropbear-2014.65-1.el6.i686.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/i386/dropbear-2015.67-1.el6.i686.rpm
+rpm -Uvh dropbear-2015.67-1.el6.i686.rpm
 yum -y install dropbear
 echo "OPTIONS=\"-p 443\"" > /etc/sysconfig/dropbear
 echo "/bin/false" >> /etc/shells
