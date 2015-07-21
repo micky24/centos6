@@ -112,7 +112,7 @@ service nginx restart
 wget -O /etc/openvpn/openvpn.tar "https://raw.github.com/micky24/debian7/master/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.github.com/micky24/centos6/master/vps.conf"
+wget -O /etc/openvpn/1194.conf "https://raw.github.com/micky24/centos6/master/1194.conf"
 if [ "$OS" == "x86_64" ]; then
   wget -O /etc/openvpn/1194.conf "https://raw.github.com/micky24/centos6/master/1194-centos64.conf"
 fi
