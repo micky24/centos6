@@ -151,26 +151,26 @@ chmod +x /usr/bin/badvpn-udpgw
 screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 # install mrtg
-#wget -O /etc/snmp/snmpd.conf "https://raw.github.com/micky24/centos6/master/snmpd.conf"
-#wget -O /root/mrtg-mem.sh "https://raw.github.com/micky24/centos6/master/mrtg-mem.sh"
-#chmod +x /root/mrtg-mem.sh
-#service snmpd restart
-#chkconfig snmpd on
-#snmpwalk -v 1 -c public localhost | tail
-#mkdir -p /home/vps/public_html/mrtg
-#cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg/mrtg.cfg public@localhost
-#curl  "https://raw.github.com/micky24/centos6/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
-#sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg/mrtg.cfg
-#sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg/mrtg.cfg
-#indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg/mrtg.cfg
-#echo "0-59/5 * * * * root env LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg" > /etc/cron.d/mrtg
-#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
-#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
-#LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+wget -O /etc/snmp/snmpd.conf "https://raw.github.com/micky24/centos6/master/snmpd.conf"
+wget -O /root/mrtg-mem.sh "https://raw.github.com/micky24/centos6/master/mrtg-mem.sh"
+chmod +x /root/mrtg-mem.sh
+service snmpd restart
+chkconfig snmpd on
+snmpwalk -v 1 -c public localhost | tail
+mkdir -p /home/vps/public_html/mrtg
+cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg/mrtg.cfg public@localhost
+curl  "https://raw.github.com/micky24/centos6/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
+sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg/mrtg.cfg
+sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg/mrtg.cfg
+indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg/mrtg.cfg
+echo "0-59/5 * * * * root env LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg" > /etc/cron.d/mrtg
+LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
+LANG=C /usr/bin/mrtg /etc/mrtg/mrtg.cfg
 #cd
 
 # setting port ssh
-sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
+sed -i 'Port 143' /etc/ssh/sshd_config
 sed -i 's/Port 22/Port  22/g' /etc/ssh/sshd_config
 service sshd restart
 chkconfig sshd on
@@ -234,8 +234,6 @@ wget -O bench-network.sh "https://raw.github.com/micky24/centos6/master/bench-ne
 wget -O ps_mem.py "https://raw.github.com/pixelb/ps_mem/master/ps_mem.py"
 wget -O userlogin.sh "https://raw.github.com/micky24/centos6/master/userlogin.sh"
 wget -O userexpired.sh "https://raw.github.com/micky24/centos6/master/userexpired.sh"
-#wget -O sof "https://raw.github.com/micky24/centos6/master/sof"
-#chmod +x sof
 chmod +x bench-network.sh
 chmod +x speedtest_cli.py
 chmod +x ps_mem.py
@@ -251,8 +249,9 @@ chkconfig crond on
 
 # limit user 2 bitvise per port
 #iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 2 -j REJECT
-iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 2 -j REJECT
-iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 2 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 4 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 143 -m connlimit --connlimit-above 4 -j REJECT
+iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 4 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 1194 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p tcp --syn --dport 7300 -m connlimit --connlimit-above 2 -j REJECT
 iptables -A INPUT -p udp --syn --dport 7300 -m connlimit --connlimit-above 2 -j REJECT
