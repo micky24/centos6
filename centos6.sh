@@ -109,7 +109,7 @@ service php-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://raw.github.com/micky24/debian7os/master/openvpn-debian.tar"
+wget -O /etc/openvpn/openvpn.tar "http://script.deltacompt.com/vps/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
 wget -O /etc/openvpn/1194.conf "https://raw.github.com/micky24/centos6/master/1194-centos.conf"
